@@ -6,7 +6,7 @@
 <title>Paula Hernández — Comunicación & Marketing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#14151a;
@@ -28,6 +28,16 @@
     font-family:'Space Grotesk', sans-serif;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
+    position:relative;
+  }
+  body::before{
+    content:''; position:fixed; inset:0; z-index:2; pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity:0.05; mix-blend-mode:multiply;
+  }
+  .hand{
+    font-family:'Caveat', cursive; font-weight:600;
+    color:var(--coral-deep); line-height:1;
   }
   ::selection{ background:var(--coral); color:var(--paper); }
   a{color:inherit; text-decoration:none;}
@@ -217,22 +227,16 @@
     background:var(--ink); color:var(--paper);
     display:flex; align-items:center; justify-content:center;
     font-family:'Fraunces',serif; font-size:1.9rem; font-weight:600;
-    margin-bottom:22px; transform:rotate(-4deg);
+    margin-bottom:22px; transform:rotate(-6deg);
     box-shadow:0 0 0 4px var(--paper), 0 0 0 5px var(--line);
     transition:transform .3s var(--ease);
   }
   .initials:hover{ transform:rotate(0deg); }
-  .initials::after{
-    content:'SELLO\A OFICIAL'; white-space:pre; line-height:1.15;
-    position:absolute; bottom:-16px; right:-16px;
-    width:54px; height:54px; border-radius:50%;
-    border:1.5px dashed var(--coral-deep); color:var(--coral-deep);
-    background:var(--paper);
-    display:flex; align-items:center; justify-content:center; text-align:center;
-    font-family:'JetBrains Mono',monospace; font-size:0.46rem; font-weight:600; letter-spacing:.02em;
-    transform:rotate(-12deg);
-  }
+
+  .stamp-mark{ position:absolute; pointer-events:none; }
+  .stamp-mark svg{ display:block; overflow:visible; }
   .about-meta div{ font-size:0.85rem; padding:6px 0; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; gap:10px;}
+  .signature-block{ margin-top:28px; padding-top:6px; }
   .about-meta span:first-child{ color:var(--grey); }
   .about-lead{
     font-family:'Fraunces', serif; font-weight:400; font-size:clamp(1.3rem,2.6vw,1.9rem);
@@ -250,10 +254,10 @@
     display:flex; gap:8px; align-items:center;
     transition:transform .2s var(--ease), background .2s ease;
   }
-  .lang-chip:nth-child(1){ transform:rotate(-2deg); }
-  .lang-chip:nth-child(2){ transform:rotate(1.5deg); }
-  .lang-chip:nth-child(3){ transform:rotate(-1deg); }
-  .lang-chip:nth-child(4){ transform:rotate(2deg); }
+  .lang-chip:nth-child(1){ transform:rotate(-5deg); }
+  .lang-chip:nth-child(2){ transform:rotate(4deg); }
+  .lang-chip:nth-child(3){ transform:rotate(-3deg); }
+  .lang-chip:nth-child(4){ transform:rotate(5deg); }
   .lang-chip:hover{ transform:rotate(0deg) translateY(-2px); background:var(--paper-dim); }
   .lang-chip b{ color:var(--cobalt); }
 
@@ -263,12 +267,8 @@
   }
   .story:last-child{ border-bottom:none; }
   @media (max-width:820px){ .story{ grid-template-columns:1fr; gap:2vh; } }
-  .story-date{
-    font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--coral-deep);
-    border:1.5px dashed var(--coral-deep); border-radius:999px;
-    padding:6px 12px; display:inline-block; width:fit-content;
-    align-self:start; transform:rotate(-2deg);
-  }
+  .story-date{ display:flex; flex-direction:column; align-items:flex-start; gap:10px; align-self:start; }
+  .story-date .date-label{ font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--grey); }
   .story-kicker{ font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:var(--coral-deep); letter-spacing:.06em; text-transform:uppercase; margin-bottom:8px;}
   .story-title{ font-size:clamp(1.5rem,2.6vw,2.1rem); margin-bottom:14px; }
   .story-body{ color:#3a3b42; line-height:1.65; max-width:640px; margin-bottom:20px; }
@@ -282,20 +282,30 @@
   .card{
     background:var(--paper-dim);
     border:1px solid var(--line);
-    padding:28px 24px; display:flex; flex-direction:column; gap:14px;
+    padding:32px 24px 24px; display:flex; flex-direction:column; gap:14px;
     min-height:280px; position:relative;
+    box-shadow:0 2px 6px rgba(20,21,26,0.06);
     transition:transform .25s ease, box-shadow .25s ease;
   }
   .card::before{
     content:''; position:absolute; top:0; right:0;
     border-width:0 20px 20px 0; border-style:solid;
     border-color:transparent var(--paper) transparent transparent;
+    filter:drop-shadow(-1px 1px 1.5px rgba(20,21,26,0.15));
   }
-  .grid-projects .card:nth-child(1){ transform:rotate(-0.6deg); }
-  .grid-projects .card:nth-child(2){ transform:rotate(0.5deg); }
-  .grid-projects .card:nth-child(3){ transform:rotate(-0.4deg); }
-  .grid-projects .card:nth-child(4){ transform:rotate(0.6deg); }
-  .card:hover{ transform:translateY(-6px) rotate(0deg); box-shadow:0 14px 30px rgba(20,21,26,0.1); }
+  .card::after{
+    content:''; position:absolute; top:-10px; left:28px;
+    width:52px; height:20px;
+    background:rgba(47,77,255,0.16);
+    border:1px solid rgba(47,77,255,0.22);
+    transform:rotate(-3deg);
+  }
+  .grid-projects .card:nth-child(1){ transform:rotate(-2.2deg); }
+  .grid-projects .card:nth-child(2){ transform:rotate(1.6deg); }
+  .grid-projects .card:nth-child(2)::after{ left:auto; right:28px; transform:rotate(4deg); background:rgba(168,58,30,0.14); border-color:rgba(168,58,30,0.2); }
+  .grid-projects .card:nth-child(3){ transform:rotate(-1.4deg); }
+  .grid-projects .card:nth-child(4){ transform:rotate(2deg); }
+  .card:hover{ transform:translateY(-6px) rotate(0deg); box-shadow:0 16px 34px rgba(20,21,26,0.14); }
   .card-tag{
     font-family:'JetBrains Mono',monospace; font-size:0.66rem; letter-spacing:.06em; text-transform:uppercase;
     color:var(--cobalt); border:1px dashed var(--cobalt); border-radius:999px;
@@ -312,7 +322,7 @@
     background:transparent; border:1px dashed var(--line); transform:none;
     align-items:center; justify-content:center; text-align:center; color:var(--grey);
   }
-  .card.ghost::before{ display:none; }
+  .card.ghost::before, .card.ghost::after{ display:none; }
   .card.ghost span{ font-family:'Fraunces',serif; font-style:italic; font-size:1.2rem; color:var(--ink); }
 
   .split{ display:grid; grid-template-columns:1fr 1fr; gap:6vw; }
@@ -332,9 +342,9 @@
   .tagcloud{ display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
   .tag{ font-family:'JetBrains Mono',monospace; font-size:0.76rem; padding:8px 14px; border:1.5px dashed var(--ink); border-radius:999px; transition:transform .2s var(--ease); }
   .tag.filled{ background:var(--ink); color:var(--paper); border-style:solid; }
-  .tag:nth-child(1){ transform:rotate(-1.5deg); }
-  .tag:nth-child(2){ transform:rotate(1deg); }
-  .tag:nth-child(3){ transform:rotate(-1deg); }
+  .tag:nth-child(1){ transform:rotate(-4deg); }
+  .tag:nth-child(2){ transform:rotate(3deg); }
+  .tag:nth-child(3){ transform:rotate(-3deg); }
   .tag:hover{ transform:translateY(-2px) rotate(0deg); }
 
   footer{ background:var(--ink); color:var(--paper); padding:12vh 0 5vh; margin-top:10vh; }
@@ -415,7 +425,22 @@
     </div>
     <div class="about">
       <div class="about-side reveal">
-        <div class="initials">PH</div>
+        <div class="initials">
+          PH
+          <span class="stamp-mark" aria-hidden="true" style="bottom:-32px; right:-36px; color:var(--coral-deep); transform:rotate(-11deg);">
+            <svg viewBox="0 0 100 100" width="86" height="86">
+              <defs>
+                <path id="stampTopAbout" d="M 14,50 A 36,36 0 0,1 86,50"/>
+                <path id="stampBotAbout" d="M 22,54 A 32,32 0 0,0 78,54"/>
+              </defs>
+              <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.2"/>
+              <circle cx="50" cy="50" r="39" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="1.5 3"/>
+              <path d="M50 31 L53.5 46.5 L69 50 L53.5 53.5 L50 69 L46.5 53.5 L31 50 L46.5 46.5 Z" fill="currentColor"/>
+              <text font-size="7.5" font-weight="700" letter-spacing="1.4" fill="currentColor" font-family="'JetBrains Mono',monospace"><textPath href="#stampTopAbout" startOffset="50%" text-anchor="middle">SELLO OFICIAL</textPath></text>
+              <text font-size="7.5" font-weight="700" letter-spacing="1.4" fill="currentColor" font-family="'JetBrains Mono',monospace"><textPath href="#stampBotAbout" startOffset="50%" text-anchor="middle">MADRID</textPath></text>
+            </svg>
+          </span>
+        </div>
         <div class="about-meta">
           <div><span>Tipo</span><span>P · Profesional</span></div>
           <div><span>Nacionalidad</span><span>Española</span></div>
@@ -423,6 +448,10 @@
           <div><span>Ocupación</span><span>Comunicación & Marketing</span></div>
           <div><span>Formación</span><span>Traducción + Máster Comms</span></div>
           <div><span>Válido desde</span><span>Julio 2026</span></div>
+        </div>
+        <div class="signature-block">
+          <span class="hand" style="font-size:2.2rem;">Paula Hernández</span>
+          <span class="section-tag" style="margin:2px 0 0;">Firma del titular</span>
         </div>
       </div>
       <div class="reveal">
@@ -448,7 +477,22 @@
     </div>
 
     <div class="story reveal">
-      <div class="story-date">2025 — Presente</div>
+      <div class="story-date">
+        <span class="stamp-mark" aria-hidden="true" style="position:static; color:var(--coral-deep); transform:rotate(-11deg);">
+          <svg viewBox="0 0 100 100" width="78" height="78">
+            <defs>
+              <path id="stampTopExp1" d="M 14,50 A 36,36 0 0,1 86,50"/>
+              <path id="stampBotExp1" d="M 22,54 A 32,32 0 0,0 78,54"/>
+            </defs>
+            <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.2"/>
+            <circle cx="50" cy="50" r="39" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="1.5 3"/>
+            <path d="M50 31 L53.5 46.5 L69 50 L53.5 53.5 L50 69 L46.5 53.5 L31 50 L46.5 46.5 Z" fill="currentColor"/>
+            <text font-size="7.5" font-weight="700" letter-spacing="1.4" fill="currentColor" font-family="'JetBrains Mono',monospace"><textPath href="#stampTopExp1" startOffset="50%" text-anchor="middle">ENTRADA</textPath></text>
+            <text font-size="8.5" font-weight="700" letter-spacing="1.4" fill="currentColor" font-family="'JetBrains Mono',monospace"><textPath href="#stampBotExp1" startOffset="50%" text-anchor="middle">2025</textPath></text>
+          </svg>
+        </span>
+        <span class="date-label">2025 — Presente</span>
+      </div>
       <div>
         <div class="story-kicker">ZINK Innovation & Trends</div>
         <h3 class="story-title">Community Manager</h3>
@@ -462,7 +506,22 @@
     </div>
 
     <div class="story reveal">
-      <div class="story-date">2026</div>
+      <div class="story-date">
+        <span class="stamp-mark" aria-hidden="true" style="position:static; color:var(--cobalt); transform:rotate(8deg);">
+          <svg viewBox="0 0 100 100" width="78" height="78">
+            <defs>
+              <path id="stampTopExp2" d="M 14,50 A 36,36 0 0,1 86,50"/>
+              <path id="stampBotExp2" d="M 22,54 A 32,32 0 0,0 78,54"/>
+            </defs>
+            <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.2"/>
+            <circle cx="50" cy="50" r="39" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="1.5 3"/>
+            <path d="M50 31 L53.5 46.5 L69 50 L53.5 53.5 L50 69 L46.5 53.5 L31 50 L46.5 46.5 Z" fill="currentColor"/>
+            <text font-size="7.5" font-weight="700" letter-spacing="1.4" fill="currentColor" font-family="'JetBrains Mono',monospace"><textPath href="#stampTopExp2" startOffset="50%" text-anchor="middle">ENTRADA</textPath></text>
+            <text font-size="8.5" font-weight="700" letter-spacing="1.4" fill="currentColor" font-family="'JetBrains Mono',monospace"><textPath href="#stampBotExp2" startOffset="50%" text-anchor="middle">2026</textPath></text>
+          </svg>
+        </span>
+        <span class="date-label">2026</span>
+      </div>
       <div>
         <div class="story-kicker">Amazing Agency</div>
         <h3 class="story-title">Content Specialist Trainee</h3>
@@ -475,7 +534,22 @@
     </div>
 
     <div class="story reveal">
-      <div class="story-date">2025</div>
+      <div class="story-date">
+        <span class="stamp-mark" aria-hidden="true" style="position:static; color:var(--coral-deep); transform:rotate(-5deg);">
+          <svg viewBox="0 0 100 100" width="78" height="78">
+            <defs>
+              <path id="stampTopExp3" d="M 14,50 A 36,36 0 0,1 86,50"/>
+              <path id="stampBotExp3" d="M 22,54 A 32,32 0 0,0 78,54"/>
+            </defs>
+            <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.2"/>
+            <circle cx="50" cy="50" r="39" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="1.5 3"/>
+            <path d="M50 31 L53.5 46.5 L69 50 L53.5 53.5 L50 69 L46.5 53.5 L31 50 L46.5 46.5 Z" fill="currentColor"/>
+            <text font-size="7.5" font-weight="700" letter-spacing="1.4" fill="currentColor" font-family="'JetBrains Mono',monospace"><textPath href="#stampTopExp3" startOffset="50%" text-anchor="middle">ENTRADA</textPath></text>
+            <text font-size="8.5" font-weight="700" letter-spacing="1.4" fill="currentColor" font-family="'JetBrains Mono',monospace"><textPath href="#stampBotExp3" startOffset="50%" text-anchor="middle">2025</textPath></text>
+          </svg>
+        </span>
+        <span class="date-label">2025</span>
+      </div>
       <div>
         <div class="story-kicker">Herbert Smith Freehills</div>
         <h3 class="story-title">Becaria de Traducción</h3>
