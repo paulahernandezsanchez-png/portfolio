@@ -204,19 +204,34 @@
   .section-num{ font-family:'JetBrains Mono',monospace; color:var(--coral-deep); font-size:0.85rem; }
   .section-title{ font-size:clamp(2.1rem, 4.4vw, 3.4rem); }
 
+  .section-tag{
+    font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--grey); margin-bottom:10px; display:block;
+  }
+
   .about{ display:grid; grid-template-columns: 0.9fr 1.6fr; gap:6vw; }
   @media (max-width:820px){ .about{ grid-template-columns:1fr; gap:5vh; } }
   .about-side{ position:sticky; top:100px; align-self:start; }
   .initials{
-    width:96px; height:96px; border-radius:50%;
+    width:96px; height:120px; border-radius:6px; position:relative;
     background:var(--ink); color:var(--paper);
     display:flex; align-items:center; justify-content:center;
     font-family:'Fraunces',serif; font-size:1.9rem; font-weight:600;
-    margin-bottom:18px; transform:rotate(-4deg);
+    margin-bottom:22px; transform:rotate(-4deg);
     box-shadow:0 0 0 4px var(--paper), 0 0 0 5px var(--line);
     transition:transform .3s var(--ease);
   }
   .initials:hover{ transform:rotate(0deg); }
+  .initials::after{
+    content:'SELLO\A OFICIAL'; white-space:pre; line-height:1.15;
+    position:absolute; bottom:-16px; right:-16px;
+    width:54px; height:54px; border-radius:50%;
+    border:1.5px dashed var(--coral-deep); color:var(--coral-deep);
+    background:var(--paper);
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    font-family:'JetBrains Mono',monospace; font-size:0.46rem; font-weight:600; letter-spacing:.02em;
+    transform:rotate(-12deg);
+  }
   .about-meta div{ font-size:0.85rem; padding:6px 0; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; gap:10px;}
   .about-meta span:first-child{ color:var(--grey); }
   .about-lead{
@@ -230,12 +245,16 @@
   .about-lead b{ font-weight:600; background:linear-gradient(to top, var(--paper-dim) 40%, transparent 40%);}
   .langs{ margin-top:5vh; display:flex; flex-wrap:wrap; gap:10px; }
   .lang-chip{
-    font-family:'JetBrains Mono',monospace; font-size:0.78rem;
-    border:1px solid var(--ink); border-radius:999px; padding:7px 14px;
+    font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:var(--coral-deep);
+    border:1.5px dashed var(--coral-deep); border-radius:999px; padding:7px 14px;
     display:flex; gap:8px; align-items:center;
     transition:transform .2s var(--ease), background .2s ease;
   }
-  .lang-chip:hover{ transform:rotate(-2deg) translateY(-2px); background:var(--paper-dim); }
+  .lang-chip:nth-child(1){ transform:rotate(-2deg); }
+  .lang-chip:nth-child(2){ transform:rotate(1.5deg); }
+  .lang-chip:nth-child(3){ transform:rotate(-1deg); }
+  .lang-chip:nth-child(4){ transform:rotate(2deg); }
+  .lang-chip:hover{ transform:rotate(0deg) translateY(-2px); background:var(--paper-dim); }
   .lang-chip b{ color:var(--cobalt); }
 
   .story{
@@ -244,7 +263,12 @@
   }
   .story:last-child{ border-bottom:none; }
   @media (max-width:820px){ .story{ grid-template-columns:1fr; gap:2vh; } }
-  .story-date{ font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:var(--grey); }
+  .story-date{
+    font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--coral-deep);
+    border:1.5px dashed var(--coral-deep); border-radius:999px;
+    padding:6px 12px; display:inline-block; width:fit-content;
+    align-self:start; transform:rotate(-2deg);
+  }
   .story-kicker{ font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:var(--coral-deep); letter-spacing:.06em; text-transform:uppercase; margin-bottom:8px;}
   .story-title{ font-size:clamp(1.5rem,2.6vw,2.1rem); margin-bottom:14px; }
   .story-body{ color:#3a3b42; line-height:1.65; max-width:640px; margin-bottom:20px; }
@@ -259,18 +283,36 @@
     background:var(--paper-dim);
     border:1px solid var(--line);
     padding:28px 24px; display:flex; flex-direction:column; gap:14px;
-    min-height:280px;
+    min-height:280px; position:relative;
     transition:transform .25s ease, box-shadow .25s ease;
   }
-  .card:hover{ transform:translateY(-6px); box-shadow:0 14px 30px rgba(20,21,26,0.1); }
-  .card-tag{ font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--cobalt); }
+  .card::before{
+    content:''; position:absolute; top:0; right:0;
+    border-width:0 20px 20px 0; border-style:solid;
+    border-color:transparent var(--paper) transparent transparent;
+  }
+  .grid-projects .card:nth-child(1){ transform:rotate(-0.6deg); }
+  .grid-projects .card:nth-child(2){ transform:rotate(0.5deg); }
+  .grid-projects .card:nth-child(3){ transform:rotate(-0.4deg); }
+  .grid-projects .card:nth-child(4){ transform:rotate(0.6deg); }
+  .card:hover{ transform:translateY(-6px) rotate(0deg); box-shadow:0 14px 30px rgba(20,21,26,0.1); }
+  .card-tag{
+    font-family:'JetBrains Mono',monospace; font-size:0.66rem; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--cobalt); border:1px dashed var(--cobalt); border-radius:999px;
+    padding:4px 10px; width:fit-content;
+  }
   .card h3{ font-size:1.4rem; }
   .card p{ font-size:0.92rem; line-height:1.55; color:#3a3b42; flex:1; }
-  .card-foot{ display:flex; justify-content:space-between; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--grey); }
+  .card-foot{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--grey);
+    border-top:1px dashed var(--line); padding-top:12px;
+  }
   .card.ghost{
-    background:transparent; border:1px dashed var(--line);
+    background:transparent; border:1px dashed var(--line); transform:none;
     align-items:center; justify-content:center; text-align:center; color:var(--grey);
   }
+  .card.ghost::before{ display:none; }
   .card.ghost span{ font-family:'Fraunces',serif; font-style:italic; font-size:1.2rem; color:var(--ink); }
 
   .split{ display:grid; grid-template-columns:1fr 1fr; gap:6vw; }
@@ -288,9 +330,12 @@
   .skillbar-row.in .skillbar-fill{ transform:scaleX(1); }
 
   .tagcloud{ display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
-  .tag{ font-family:'JetBrains Mono',monospace; font-size:0.76rem; padding:8px 14px; border:1px solid var(--ink); border-radius:999px; transition:transform .2s var(--ease); }
-  .tag.filled{ background:var(--ink); color:var(--paper); }
-  .tag:hover{ transform:translateY(-2px); }
+  .tag{ font-family:'JetBrains Mono',monospace; font-size:0.76rem; padding:8px 14px; border:1.5px dashed var(--ink); border-radius:999px; transition:transform .2s var(--ease); }
+  .tag.filled{ background:var(--ink); color:var(--paper); border-style:solid; }
+  .tag:nth-child(1){ transform:rotate(-1.5deg); }
+  .tag:nth-child(2){ transform:rotate(1deg); }
+  .tag:nth-child(3){ transform:rotate(-1deg); }
+  .tag:hover{ transform:translateY(-2px) rotate(0deg); }
 
   footer{ background:var(--ink); color:var(--paper); padding:12vh 0 5vh; margin-top:10vh; }
   .foot-title{
@@ -337,23 +382,23 @@
   <section class="hero" style="border-top:none;">
     <div class="hero-top">
       <div>
-        <div class="hero-issue">VOL. 01 — EDICIÓN 2026</div>
+        <div class="hero-issue">PASAPORTE PROFESIONAL · Nº 2026-ES-PHS</div>
         <h1 class="hero-name">Paula<br><em>Hernández</em></h1>
         <p class="hero-role">Comunicación & Marketing — estrategia de contenido, redes y branding con enfoque medible.</p>
-        <div class="status-chip"><span class="pulse"></span>Disponible a partir de julio 2026</div>
+        <div class="status-chip"><span class="pulse"></span>Embarque abierto desde julio 2026</div>
       </div>
     </div>
 
     <div class="hero-grid">
       <p class="hero-tagline reveal">Diseño estrategias de contenido que no solo <span class="hl">conectan</span> con la audiencia, sino que generan un impacto real y medible.</p>
 
-      <nav class="toc reveal" aria-label="Índice">
-        <div class="toc-title">Índice</div>
-        <a class="toc-row" href="#sobre-mi"><span class="num">01</span><span class="label">Sobre mí</span><span class="fill"></span><span class="pg">Perfil</span></a>
-        <a class="toc-row" href="#experiencia"><span class="num">02</span><span class="label">Experiencia laboral</span><span class="fill"></span><span class="pg">3 puestos</span></a>
-        <a class="toc-row" href="#proyectos"><span class="num">03</span><span class="label">Proyectos</span><span class="fill"></span><span class="pg">Casos</span></a>
-        <a class="toc-row" href="#formacion"><span class="num">04</span><span class="label">Formación & skills</span><span class="fill"></span><span class="pg">Académico</span></a>
-        <a class="toc-row" href="#contacto"><span class="num">05</span><span class="label">Contacto</span><span class="fill"></span><span class="pg">Hablemos</span></a>
+      <nav class="toc reveal" aria-label="Itinerario">
+        <div class="toc-title">Itinerario</div>
+        <a class="toc-row" href="#sobre-mi"><span class="num">01</span><span class="label">Sobre mí</span><span class="fill"></span><span class="pg">Datos</span></a>
+        <a class="toc-row" href="#experiencia"><span class="num">02</span><span class="label">Experiencia laboral</span><span class="fill"></span><span class="pg">3 escalas</span></a>
+        <a class="toc-row" href="#proyectos"><span class="num">03</span><span class="label">Proyectos</span><span class="fill"></span><span class="pg">Postales</span></a>
+        <a class="toc-row" href="#formacion"><span class="num">04</span><span class="label">Formación & skills</span><span class="fill"></span><span class="pg">Bitácora</span></a>
+        <a class="toc-row" href="#contacto"><span class="num">05</span><span class="label">Contacto</span><span class="fill"></span><span class="pg">Destino</span></a>
       </nav>
     </div>
 
@@ -362,22 +407,28 @@
 
   <section id="sobre-mi">
     <div class="section-head">
-      <h2 class="section-title reveal">Sobre mí</h2>
+      <div>
+        <span class="section-tag">Datos personales</span>
+        <h2 class="section-title reveal">Sobre mí</h2>
+      </div>
       <span class="section-num">01 / 05</span>
     </div>
     <div class="about">
       <div class="about-side reveal">
         <div class="initials">PH</div>
         <div class="about-meta">
-          <div><span>Base</span><span>Madrid, España</span></div>
-          <div><span>Rol</span><span>Comunicación & Marketing</span></div>
+          <div><span>Tipo</span><span>P · Profesional</span></div>
+          <div><span>Nacionalidad</span><span>Española</span></div>
+          <div><span>Residencia</span><span>Madrid, España</span></div>
+          <div><span>Ocupación</span><span>Comunicación & Marketing</span></div>
           <div><span>Formación</span><span>Traducción + Máster Comms</span></div>
-          <div><span>Disponibilidad</span><span>Julio 2026</span></div>
+          <div><span>Válido desde</span><span>Julio 2026</span></div>
         </div>
       </div>
       <div class="reveal">
-        <p class="about-lead">Profesional de la comunicación con un perfil híbrido: graduada en <b>Traducción e Interpretación</b> y especializada en <b>Nuevas Tecnologías</b>. Destaco por mi capacidad para liderar proyectos creativos y diseñar estrategias de contenido que conectan con la audiencia y generan un impacto real y medible.</p>
-        <div class="langs">
+        <p class="about-lead">Perfil oficialmente híbrido: pasaporte de <b>Traducción e Interpretación</b>, visado reciente en <b>Nuevas Tecnologías</b>. Me muevo sin fricción entre el lenguaje, la estrategia y el dato — liderando proyectos creativos y diseñando estrategias de contenido que no se quedan en tránsito: conectan con la audiencia y generan un impacto real y medible.</p>
+        <span class="section-tag" style="margin-top:5vh;">Sellos de idioma</span>
+        <div class="langs" style="margin-top:0;">
           <div class="lang-chip">Español <b>Nativo</b></div>
           <div class="lang-chip">Inglés <b>C1 · CAE</b></div>
           <div class="lang-chip">Francés <b>B2 · DELF</b></div>
@@ -389,7 +440,10 @@
 
   <section id="experiencia">
     <div class="section-head">
-      <h2 class="section-title reveal">Experiencia laboral</h2>
+      <div>
+        <span class="section-tag">Sellos de entrada</span>
+        <h2 class="section-title reveal">Experiencia laboral</h2>
+      </div>
       <span class="section-num">02 / 05</span>
     </div>
 
@@ -436,7 +490,10 @@
 
   <section id="proyectos">
     <div class="section-head">
-      <h2 class="section-title reveal">Proyectos</h2>
+      <div>
+        <span class="section-tag">Postales enviadas</span>
+        <h2 class="section-title reveal">Proyectos</h2>
+      </div>
       <span class="section-num">03 / 05</span>
     </div>
 
@@ -463,20 +520,23 @@
       </div>
 
       <div class="card ghost reveal">
-        <span>+ Próximo proyecto</span>
-        <p style="color:var(--grey); font-size:0.85rem;">Este hueco es para tu próximo caso de estudio: duplica una tarjeta y cuenta el reto, tu proceso y el resultado.</p>
+        <span>+ Próxima postal</span>
+        <p style="color:var(--grey); font-size:0.85rem;">Este hueco es para tu próxima postal: duplica una tarjeta y cuenta el reto, tu proceso y el resultado.</p>
       </div>
     </div>
   </section>
 
   <section id="formacion">
     <div class="section-head">
-      <h2 class="section-title reveal">Formación & skills</h2>
+      <div>
+        <span class="section-tag">Visados y sellos</span>
+        <h2 class="section-title reveal">Formación & skills</h2>
+      </div>
       <span class="section-num">04 / 05</span>
     </div>
     <div class="split">
       <div class="reveal">
-        <div class="eyebrow" style="margin-bottom:18px;">Formación académica</div>
+        <div class="eyebrow" style="margin-bottom:18px;">Bitácora académica</div>
         <div class="timeline-item">
           <div class="yr">Oct 25—Jul 26</div>
           <div><h4>Máster en Dirección de Comunicación y Nuevas Tecnologías</h4><p>ESIC Business & Marketing School</p></div>
@@ -514,7 +574,7 @@
           <div class="skillbar-track"><div class="skillbar-fill" style="width:62%"></div></div>
         </div>
 
-        <div class="eyebrow" style="margin:36px 0 14px;">Certificaciones</div>
+        <div class="eyebrow" style="margin:36px 0 14px;">Sellos y certificados</div>
         <div class="tagcloud">
           <span class="tag filled">Excel Associate Microsoft · 2026</span>
           <span class="tag filled">PMI Project Management Ready® · 2026</span>
@@ -528,8 +588,8 @@
 
 <footer id="contacto">
   <div class="wrap">
-    <div class="eyebrow" style="color:rgba(243,240,231,0.55); margin-bottom:18px;">05 / 05 — Contacto</div>
-    <h2 class="foot-title reveal">Hablemos de tu<br><em>próximo proyecto.</em></h2>
+    <div class="eyebrow" style="color:rgba(243,240,231,0.55); margin-bottom:18px;">05 / 05 — Última escala</div>
+    <h2 class="foot-title reveal">Hablemos de tu<br><em>próximo destino.</em></h2>
     <div class="foot-links">
       <a class="foot-btn" href="mailto:paula.hernandez.sanchez@gmail.com">↳ paula.hernandez.sanchez@gmail.com</a>
       <a class="foot-btn" href="tel:+34633028449">↳ 633 02 84 49</a>
@@ -537,7 +597,7 @@
     </div>
     <div class="foot-bottom">
       <span>PAULA HERNÁNDEZ — COMUNICACIÓN & MARKETING</span>
-      <span>MADRID, ESPAÑA — 2026</span>
+      <span>MADRID (MAD) · 2026</span>
     </div>
   </div>
 </footer>
