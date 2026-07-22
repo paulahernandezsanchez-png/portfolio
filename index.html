@@ -19,9 +19,10 @@
     --line: rgba(20,21,26,0.14);
     --maxw: 1180px;
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-bounce: cubic-bezier(.34, 1.56, .64, 1);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth; overflow-x:hidden;}
   body{
     background:var(--paper);
     color:var(--ink);
@@ -73,10 +74,29 @@
   .reveal:nth-child(4){ transition-delay:180ms; }
   .reveal:nth-child(5){ transition-delay:240ms; }
 
+  .reveal-wipe{ clip-path:inset(0 100% 0 0); transition:clip-path .9s var(--ease); }
+  .reveal-wipe.in{ clip-path:inset(0 0 0 0); }
+
   @media (prefers-reduced-motion: reduce){
     .reveal{ opacity:1 !important; transform:none !important; transition:none !important; }
+    .reveal-wipe{ clip-path:inset(0) !important; transition:none !important; }
+    .marquee-track{ animation:none !important; }
     html{ scroll-behavior:auto; }
   }
+
+  .marquee{
+    overflow:hidden; white-space:nowrap;
+    margin:0 -6vw; padding:22px 0;
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .marquee-track{ display:flex; width:max-content; animation:marquee-scroll 28s linear infinite; }
+  .marquee-track .seg{ display:flex; align-items:center; flex-shrink:0; }
+  .marquee-track .seg span{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:clamp(1.1rem, 2.4vw, 1.6rem); padding:0 1.2rem; white-space:nowrap;
+  }
+  .marquee-track .seg i{ font-style:normal; color:var(--coral-deep); font-size:0.8em; }
+  @keyframes marquee-scroll{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 
   .masthead{
     position:sticky; top:0; z-index:50;
@@ -229,9 +249,9 @@
     font-family:'Fraunces',serif; font-size:1.9rem; font-weight:600;
     margin-bottom:22px; transform:rotate(-6deg);
     box-shadow:0 0 0 4px var(--paper), 0 0 0 5px var(--line);
-    transition:transform .3s var(--ease);
+    transition:transform .4s var(--ease-bounce), border-radius .4s var(--ease-bounce);
   }
-  .initials:hover{ transform:rotate(0deg); }
+  .initials:hover{ transform:rotate(0deg) scale(1.03); border-radius:50%; }
 
   .stamp-mark{ position:absolute; pointer-events:none; }
   .stamp-mark svg{ display:block; overflow:visible; }
@@ -252,7 +272,7 @@
     font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:var(--coral-deep);
     border:1.5px dashed var(--coral-deep); border-radius:999px; padding:7px 14px;
     display:flex; gap:8px; align-items:center;
-    transition:transform .2s var(--ease), background .2s ease;
+    transition:transform .35s var(--ease-bounce), background .2s ease;
   }
   .lang-chip:nth-child(1){ transform:rotate(-5deg); }
   .lang-chip:nth-child(2){ transform:rotate(4deg); }
@@ -283,16 +303,18 @@
     background:var(--paper-dim);
     border:1px solid var(--line);
     padding:32px 24px 24px; display:flex; flex-direction:column; gap:14px;
-    min-height:280px; position:relative;
+    min-height:280px; position:relative; border-radius:0;
     box-shadow:0 2px 6px rgba(20,21,26,0.06);
-    transition:transform .25s ease, box-shadow .25s ease;
+    transition:transform .35s var(--ease-bounce), box-shadow .35s var(--ease), border-radius .35s var(--ease);
   }
   .card::before{
     content:''; position:absolute; top:0; right:0;
     border-width:0 20px 20px 0; border-style:solid;
     border-color:transparent var(--paper) transparent transparent;
     filter:drop-shadow(-1px 1px 1.5px rgba(20,21,26,0.15));
+    transition:opacity .25s ease;
   }
+  .card:hover::before{ opacity:0; }
   .card::after{
     content:''; position:absolute; top:-10px; left:28px;
     width:52px; height:20px;
@@ -305,7 +327,7 @@
   .grid-projects .card:nth-child(2)::after{ left:auto; right:28px; transform:rotate(4deg); background:rgba(168,58,30,0.14); border-color:rgba(168,58,30,0.2); }
   .grid-projects .card:nth-child(3){ transform:rotate(-1.4deg); }
   .grid-projects .card:nth-child(4){ transform:rotate(2deg); }
-  .card:hover{ transform:translateY(-6px) rotate(0deg); box-shadow:0 16px 34px rgba(20,21,26,0.14); }
+  .card:hover{ transform:translateY(-8px) rotate(0deg); box-shadow:0 16px 34px rgba(20,21,26,0.14); border-radius:22px; }
   .card-tag{
     font-family:'JetBrains Mono',monospace; font-size:0.66rem; letter-spacing:.06em; text-transform:uppercase;
     color:var(--cobalt); border:1px dashed var(--cobalt); border-radius:999px;
@@ -340,7 +362,7 @@
   .skillbar-row.in .skillbar-fill{ transform:scaleX(1); }
 
   .tagcloud{ display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
-  .tag{ font-family:'JetBrains Mono',monospace; font-size:0.76rem; padding:8px 14px; border:1.5px dashed var(--ink); border-radius:999px; transition:transform .2s var(--ease); }
+  .tag{ font-family:'JetBrains Mono',monospace; font-size:0.76rem; padding:8px 14px; border:1.5px dashed var(--ink); border-radius:999px; transition:transform .35s var(--ease-bounce); }
   .tag.filled{ background:var(--ink); color:var(--paper); border-style:solid; }
   .tag:nth-child(1){ transform:rotate(-4deg); }
   .tag:nth-child(2){ transform:rotate(3deg); }
@@ -415,11 +437,18 @@
     <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><span class="line"></span></div>
   </section>
 
-  <section id="sobre-mi">
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="seg"><span>Comunicación</span><i>✦</i><span>Estrategia</span><i>✦</i><span>Contenido</span><i>✦</i><span>Marca</span><i>✦</i><span>Comunicación</span><i>✦</i><span>Estrategia</span><i>✦</i><span>Contenido</span><i>✦</i><span>Marca</span><i>✦</i></div>
+      <div class="seg"><span>Comunicación</span><i>✦</i><span>Estrategia</span><i>✦</i><span>Contenido</span><i>✦</i><span>Marca</span><i>✦</i><span>Comunicación</span><i>✦</i><span>Estrategia</span><i>✦</i><span>Contenido</span><i>✦</i><span>Marca</span><i>✦</i></div>
+    </div>
+  </div>
+
+  <section id="sobre-mi" style="border-top:none;">
     <div class="section-head">
       <div>
         <span class="section-tag">Datos personales</span>
-        <h2 class="section-title reveal">Sobre mí</h2>
+        <h2 class="section-title reveal-wipe">Sobre mí</h2>
       </div>
       <span class="section-num">01 / 05</span>
     </div>
@@ -471,7 +500,7 @@
     <div class="section-head">
       <div>
         <span class="section-tag">Sellos de entrada</span>
-        <h2 class="section-title reveal">Experiencia laboral</h2>
+        <h2 class="section-title reveal-wipe">Experiencia laboral</h2>
       </div>
       <span class="section-num">02 / 05</span>
     </div>
@@ -566,7 +595,7 @@
     <div class="section-head">
       <div>
         <span class="section-tag">Postales enviadas</span>
-        <h2 class="section-title reveal">Proyectos</h2>
+        <h2 class="section-title reveal-wipe">Proyectos</h2>
       </div>
       <span class="section-num">03 / 05</span>
     </div>
@@ -604,7 +633,7 @@
     <div class="section-head">
       <div>
         <span class="section-tag">Visados y sellos</span>
-        <h2 class="section-title reveal">Formación & skills</h2>
+        <h2 class="section-title reveal-wipe">Formación & skills</h2>
       </div>
       <span class="section-num">04 / 05</span>
     </div>
@@ -660,6 +689,13 @@
 
 </main>
 
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="seg"><span>Embarque abierto</span><i>✦</i><span>Julio 2026</span><i>✦</i><span>Madrid</span><i>✦</i><span>Remoto friendly</span><i>✦</i><span>Embarque abierto</span><i>✦</i><span>Julio 2026</span><i>✦</i><span>Madrid</span><i>✦</i><span>Remoto friendly</span><i>✦</i></div>
+    <div class="seg"><span>Embarque abierto</span><i>✦</i><span>Julio 2026</span><i>✦</i><span>Madrid</span><i>✦</i><span>Remoto friendly</span><i>✦</i><span>Embarque abierto</span><i>✦</i><span>Julio 2026</span><i>✦</i><span>Madrid</span><i>✦</i><span>Remoto friendly</span><i>✦</i></div>
+  </div>
+</div>
+
 <footer id="contacto">
   <div class="wrap">
     <div class="eyebrow" style="color:rgba(243,240,231,0.55); margin-bottom:18px;">05 / 05 — Última escala</div>
@@ -676,7 +712,27 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
 <script>
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let lenis = null;
+  if(!prefersReduced && window.Lenis){
+    lenis = new Lenis({ duration: 1.1, easing: (t) => 1 - Math.pow(1 - t, 3) });
+    const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
+    requestAnimationFrame(raf);
+  }
+
+  document.querySelectorAll('a[href^="#"]:not(.skip-link)').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if(!target) return;
+      e.preventDefault();
+      if(lenis){ lenis.scrollTo(target); }
+      else{ target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth' }); }
+    });
+  });
+
   const menuBtn = document.getElementById('menuBtn');
   const navlinks = document.getElementById('navlinks');
   menuBtn.addEventListener('click', () => {
@@ -688,7 +744,7 @@
     menuBtn.setAttribute('aria-expanded', 'false');
   }));
 
-  const revealEls = document.querySelectorAll('.reveal, .skillbar-row');
+  const revealEls = document.querySelectorAll('.reveal, .reveal-wipe, .skillbar-row');
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
